@@ -6,6 +6,7 @@ import (
 
 const cyan = "\033[36m"
 const reset = "\033[0m"
+const clearLine = "\033[2K"
 
 var errIndexOutofRange = fmt.Errorf("Index out of slice range")
 
@@ -13,6 +14,10 @@ type menuOption struct {
 	name        string
 	description string
 	command     func()
+}
+
+func moveCursorUp(lines int) string {
+	return fmt.Sprintf()
 }
 
 func DrawMenu(options []menuOption, currentIdx int) error {
@@ -27,6 +32,10 @@ func DrawMenu(options []menuOption, currentIdx int) error {
 		fmt.Println("  ", option.name)
 	}
 	return nil
+}
+
+func ClearMenu(options []menuOption) {
+	fmt.Println(clearLine)
 }
 
 func Menu(options []menuOption) string {

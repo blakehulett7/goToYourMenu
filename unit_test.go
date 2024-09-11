@@ -37,6 +37,16 @@ func TestDrawMenu(t *testing.T) {
 			currentIdx: 1,
 			want:       nil,
 		},
+		"idx too low": {
+			options:    options,
+			currentIdx: -1,
+			want:       errIndexOutofRange,
+		},
+		"idx too high": {
+			options:    options,
+			currentIdx: 3,
+			want:       errIndexOutofRange,
+		},
 	}
 	for name, test := range tests {
 		t.Run(name, func(t *testing.T) {
