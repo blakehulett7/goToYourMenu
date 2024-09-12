@@ -38,9 +38,13 @@ func DrawMenu(options []MenuOption, currentIdx int) error {
 
 func GetUserInput() string {
 	hideCliEcho := exec.Command("stty", "-F", "/dev/tty", "-echo")
-	hideCliEcho.Run()
+	hideCliCursor := exec.Command("bash", "-c", "tput civis")
 	showCliEcho := exec.Command("stty", "-F", "/dev/tty", "echo")
+	showCliCursor := exec.Command("bash", "-c", "tput cnorm")
+	hideCliEcho.Run()
+	hideCliCursor.Run()
 	defer showCliEcho.Run()
+	defer showCliCursor.Run()
 	readNextKeyPress := exec.Command("stty", "-F", "/dev/tty", "cbreak", "min", "1")
 	readNextKeyPress.Run()
 	var input []byte = make([]byte, 1)
