@@ -37,6 +37,10 @@ func DrawMenu(options []MenuOption, currentIdx int) error {
 }
 
 func GetUserInput() string {
+	hideCliEcho := exec.Command("stty", "-F", "/dev/tty", "-echo")
+	hideCliEcho.Run()
+	showCliEcho := exec.Command("stty", "-F", "/dev/tty", "echo")
+	defer showCliEcho.Run()
 	readNextKeyPress := exec.Command("stty", "-F", "/dev/tty", "cbreak", "min", "1")
 	readNextKeyPress.Run()
 	var input []byte = make([]byte, 1)
@@ -54,7 +58,17 @@ func Menu(options []MenuOption) string {
 		DrawMenu(options, currentIdx)
 		MoveCursorUp(len(options) + 1)
 		pressedKey := GetUserInput()
-		fmt.Println(pressedKey)
+		if pressedKey == "j" {
+			currentIdx++
+			continue
+		}
+		if pressedKey == "k" {
+			currentIdx--
+			continue
+		}
+		if pressedKey == "\n" {
+			fmt.Println("pick this one")
+		}
 		return ""
 	}
 }
