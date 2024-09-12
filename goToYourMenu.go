@@ -16,8 +16,8 @@ type menuOption struct {
 	command     func()
 }
 
-func moveCursorUp(lines int) string {
-	return fmt.Sprintf("\033[%vA", lines)
+func MoveCursorUp(lines int) {
+	fmt.Println(fmt.Sprintf("\033[%vA", lines))
 }
 
 func DrawMenu(options []menuOption, currentIdx int) error {
@@ -34,13 +34,15 @@ func DrawMenu(options []menuOption, currentIdx int) error {
 	return nil
 }
 
-func ClearMenu(options []menuOption) {
-	fmt.Println(clearLine)
+func GetUserInput(currentIdx int) int {
+
 }
 
 func Menu(options []menuOption) string {
-	DrawMenu(options, 0)
-	moveCursorUp(len(options))
-	DrawMenu(options, 1)
-	return ""
+	currentIdx := 0
+	for {
+		DrawMenu(options, currentIdx)
+		MoveCursorUp(len(options) + 1)
+		return ""
+	}
 }
