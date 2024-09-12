@@ -52,6 +52,17 @@ func GetUserInput() string {
 	}
 }
 
+func WrapIndex(options []MenuOption, currentIndex int) int {
+	arrayLength := len(options)
+	if currentIndex < 0 {
+		return arrayLength - 1
+	}
+	if currentIndex > arrayLength-1 {
+		return 0
+	}
+	return currentIndex
+}
+
 func Menu(options []MenuOption) string {
 	currentIdx := 0
 	for {
@@ -60,10 +71,12 @@ func Menu(options []MenuOption) string {
 		pressedKey := GetUserInput()
 		if pressedKey == "j" {
 			currentIdx++
+			currentIdx = WrapIndex(options, currentIdx)
 			continue
 		}
 		if pressedKey == "k" {
 			currentIdx--
+			currentIdx = WrapIndex(options, currentIdx)
 			continue
 		}
 		if pressedKey == "\n" {
