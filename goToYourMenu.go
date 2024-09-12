@@ -2,6 +2,8 @@ package goToYourMenu
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
 )
 
 const cyan = "\033[36m"
@@ -10,39 +12,49 @@ const clearLine = "\033[2K"
 
 var errIndexOutofRange = fmt.Errorf("Index out of slice range")
 
-type menuOption struct {
-	name        string
-	description string
-	command     func()
+type MenuOption struct {
+	Name        string
+	Description string
+	Command     func()
 }
 
 func MoveCursorUp(lines int) {
 	fmt.Println(fmt.Sprintf("\033[%vA", lines))
 }
 
-func DrawMenu(options []menuOption, currentIdx int) error {
+func DrawMenu(options []MenuOption, currentIdx int) error {
 	if currentIdx < 0 || currentIdx > len(options)-1 {
 		return errIndexOutofRange
 	}
 	for idx, option := range options {
 		if idx == currentIdx {
-			fmt.Println(" " + cyan + "> " + option.name + reset)
+			fmt.Println(" " + cyan + "> " + option.Name + reset)
 			continue
 		}
-		fmt.Println("  ", option.name)
+		fmt.Println("  ", option.Name)
 	}
 	return nil
 }
 
-func GetUserInput(currentIdx int) int {
-
+func GetUserInput() string {
+	readNextKeyPress := exec.Command("stty", "-F", "/dev/tty", "cbreak", "min", "1")
+	readNextKeyPress.Run()
+	var input []byte = make([]byte, 1)
+	for {
+		os.Stdin.Read(input)
+		//fmt.Println("I got the byte", input, "("+string(input)+")")
+		pressedKey := string(input)
+		return pressedKey
+	}
 }
 
-func Menu(options []menuOption) string {
+func Menu(options []MenuOption) string {
 	currentIdx := 0
 	for {
 		DrawMenu(options, currentIdx)
 		MoveCursorUp(len(options) + 1)
+		pressedKey := GetUserInput()
+		fmt.Println(pressedKey)
 		return ""
 	}
 }

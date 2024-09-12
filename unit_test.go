@@ -5,21 +5,21 @@ import (
 	"testing"
 )
 
-var options = []menuOption{
+var options = []MenuOption{
 	{
-		name:        "add",
-		description: "adddesc",
-		command:     tcommand,
+		Name:        "add",
+		Description: "adddesc",
+		Command:     tcommand,
 	},
 	{
-		name:        "view",
-		description: "viewdesc",
-		command:     tcommand,
+		Name:        "view",
+		Description: "viewdesc",
+		Command:     tcommand,
 	},
 	{
-		name:        "exit",
-		description: "exitdesc",
-		command:     tcommand,
+		Name:        "exit",
+		Description: "exitdesc",
+		Command:     tcommand,
 	},
 }
 
@@ -59,6 +59,6 @@ func TestDrawMenu(t *testing.T) {
 	}
 }
 
-func TestMenu(t *testing.T) {
-	Menu(options)
+func TestGetUserInput(t *testing.T) {
+	fmt.Println(GetUserInput())
 }
