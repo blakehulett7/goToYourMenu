@@ -22,6 +22,11 @@ func MoveCursorUp(lines int) {
 	fmt.Println(fmt.Sprintf("\033[%vA", lines))
 }
 
+func RunWorkaround(command exec.Cmd) {
+	command.Stdout = os.Stdout
+	command.Run()
+}
+
 func DrawMenu(options []MenuOption, currentIdx int) error {
 	if currentIdx < 0 || currentIdx > len(options)-1 {
 		return errIndexOutofRange
@@ -38,13 +43,13 @@ func DrawMenu(options []MenuOption, currentIdx int) error {
 
 func GetUserInput() string {
 	hideCliEcho := exec.Command("stty", "-F", "/dev/tty", "-echo")
-	hideCliCursor := exec.Command("bash", "-c", "tput civis")
+	hideCliCursor := exec.Command("tput", "civis")
 	showCliEcho := exec.Command("stty", "-F", "/dev/tty", "echo")
-	showCliCursor := exec.Command("bash", "-c", "tput cnorm")
+	showCliCursor := exec.Command("tput", "cnorm")
 	hideCliEcho.Run()
-	hideCliCursor.Run()
+	RunWorkaround(*hideCliCursor)
 	defer showCliEcho.Run()
-	defer showCliCursor.Run()
+	defer RunWorkaround(*showCliCursor)
 	readNextKeyPress := exec.Command("stty", "-F", "/dev/tty", "cbreak", "min", "1")
 	readNextKeyPress.Run()
 	var input []byte = make([]byte, 1)
