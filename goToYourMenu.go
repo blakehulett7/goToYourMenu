@@ -22,6 +22,10 @@ func MoveCursorUp(lines int) {
 	fmt.Println(fmt.Sprintf("\033[%vA", lines))
 }
 
+func MoveCursorDown(lines int) {
+	fmt.Println(fmt.Sprintf("\033[%vB", lines))
+}
+
 func RunWorkaround(command exec.Cmd) {
 	command.Stdout = os.Stdout
 	command.Run()
@@ -89,7 +93,8 @@ func Menu(options []MenuOption) string {
 			continue
 		}
 		if pressedKey == "\n" {
-			fmt.Println("pick this one")
+			MoveCursorDown(len(options) - 1)
+			options[currentIdx].Command()
 		}
 		return ""
 	}
