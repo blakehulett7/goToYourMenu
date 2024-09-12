@@ -5,28 +5,29 @@ import (
 	"testing"
 )
 
+var options = []menuOption{
+	{
+		name:        "add",
+		description: "adddesc",
+		command:     tcommand,
+	},
+	{
+		name:        "view",
+		description: "viewdesc",
+		command:     tcommand,
+	},
+	{
+		name:        "exit",
+		description: "exitdesc",
+		command:     tcommand,
+	},
+}
+
 func tcommand() {
 	fmt.Println("command executed")
 }
 
 func TestDrawMenu(t *testing.T) {
-	options := []menuOption{
-		{
-			name:        "add",
-			description: "adddesc",
-			command:     tcommand,
-		},
-		{
-			name:        "view",
-			description: "viewdesc",
-			command:     tcommand,
-		},
-		{
-			name:        "exit",
-			description: "exitdesc",
-			command:     tcommand,
-		},
-	}
 	tests := map[string]struct {
 		options    []menuOption
 		currentIdx int
@@ -56,4 +57,8 @@ func TestDrawMenu(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestMenu(t *testing.T) {
+	Menu(options)
 }
