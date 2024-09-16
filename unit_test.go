@@ -29,7 +29,7 @@ func tcommand() {
 
 func TestDrawMenu(t *testing.T) {
 	tests := map[string]struct {
-		options    []menuOption
+		options    []MenuOption
 		currentIdx int
 		want       error
 	}{

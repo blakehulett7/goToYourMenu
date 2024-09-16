@@ -55,7 +55,9 @@ func GetUserInput() string {
 	defer showCliEcho.Run()
 	defer RunWorkaround(*showCliCursor)
 	readNextKeyPress := exec.Command("stty", "-F", "/dev/tty", "cbreak", "min", "1")
+	normalPrompt := exec.Command("stty", "-F", "/dev/tty", "-cbreak")
 	readNextKeyPress.Run()
+	defer normalPrompt.Run()
 	var input []byte = make([]byte, 1)
 	for {
 		os.Stdin.Read(input)
