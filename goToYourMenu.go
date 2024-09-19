@@ -97,6 +97,7 @@ func Menu(options []MenuOption) string {
 		if pressedKey == "\n" {
 			MoveCursorDown(len(options) - 1)
 			options[currentIdx].Command()
+			return options[currentIdx].Name
 		}
 		return ""
 	}
