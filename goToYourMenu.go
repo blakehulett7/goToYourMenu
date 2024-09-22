@@ -7,6 +7,7 @@ import (
 )
 
 const cyan = "\033[36m"
+const lightGreen = "\033[10m"
 const reset = "\033[0m"
 const clearLine = "\033[2K"
 
@@ -37,7 +38,7 @@ func DrawMenu(options []MenuOption, currentIdx int) error {
 	}
 	for idx, option := range options {
 		if idx == currentIdx {
-			fmt.Println(" " + cyan + "> " + option.Name + reset)
+			fmt.Println(" " + lightGreen + "> " + option.Name + reset)
 			continue
 		}
 		fmt.Println("  ", option.Name)
