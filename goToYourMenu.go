@@ -7,7 +7,7 @@ import (
 )
 
 const cyan = "\033[36m"
-const lightGreen = "\033[10m"
+const lightGreen = "\033[32m"
 const reset = "\033[0m"
 const clearLine = "\033[2K"
 
